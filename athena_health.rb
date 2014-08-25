@@ -80,3 +80,11 @@ def factorial(input)
 	end
 end
 
+print solution("QUESTION")
+
+print Benchmark.measure { solution("QUESTION") }
+
+Number of distinct permutations obtainable from string S = NUM
+Take each unique character in S, let C = the number of times it occurs in S, take C!
+	multiply all such C!'s together, take the result and divide S.length by it
+NUM = (S.length)! / (C1! x C2! x C3! . . . x Cm!), for all m unique characters in S
