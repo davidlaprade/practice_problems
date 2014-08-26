@@ -87,4 +87,26 @@ print Benchmark.measure { solution("QUESTION") }
 Number of distinct permutations obtainable from string S = NUM
 Take each unique character in S, let C = the number of times it occurs in S, take C!
 	multiply all such C!'s together, take the result and divide S.length by it
-NUM = (S.length)! / (C1! x C2! x C3! . . . x Cm!), for all m unique characters in S
+NUM = (S.length)! / (C1! x C2! x C3! . . . x Cm!), for all m unique characters in S'
+
+# gets array of characters in input
+input_ary = input.upcase.split("")
+
+# orders input letters alphabetically, without repetition
+letter_bank = (input_ary & input_ary).sort
+
+uniq_ary = (input_ary & input_ary).map! { |x| x=x ? [x, input_ary.count(x)] : x }
+
+
+input_ary = input.upcase.split("")
+rank = 1
+
+def rank(input_ary, initial_rank)
+	letter_bank = (input_ary & input_ary).sort
+	if input_array.first == letter_bank.first
+		input_ary.shift
+		rank(input_ary, initial_rank)
+	else
+		place_in_bank = letter_bank.index(input_array.first)
+
+
