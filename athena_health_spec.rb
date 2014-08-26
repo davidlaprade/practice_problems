@@ -2,7 +2,12 @@ $LOAD_PATH << '.'
 require 'athena_health'
 # require 'test'
 
-describe Array, "count_uniq_permutations" do
+describe "count_uniq_permutations(array)" do
+
+	it "should output 1 when passed A" do
+		input = "A".split("")
+		expect(count_uniq_permutations(input)).to eq(1)
+	end
 
 	it "should output 1 when passed AAAAAAAAAAAAAA" do
 		input = "AAAAAAAAAAAAAA".split("")
@@ -14,9 +19,9 @@ describe Array, "count_uniq_permutations" do
 		expect(count_uniq_permutations(input)).to eq(14)
 	end
 
-	it "should output 120 when passed AABBCC" do
+	it "should output 90 when passed AABBCC" do
 		input = "AABBCC".split("")
-		expect(count_uniq_permutations(input)).to eq(120)
+		expect(count_uniq_permutations(input)).to eq(90)
 	end
 
 	it "should output 1680 when passed AAABBBCCC" do
@@ -24,10 +29,67 @@ describe Array, "count_uniq_permutations" do
 		expect(count_uniq_permutations(input)).to eq(1680)
 	end
 
-	it "should output 1 when passed A" do
-		input = "A".split("")
-		expect(count_uniq_permutations(input)).to eq(1)
+	# should output the same thing as previous when input letters are scrambled
+	it "should output 1680 when passed BCABACABC" do
+		input = "BCABACABC".split("")
+		expect(count_uniq_permutations(input)).to eq(1680)
 	end
+
+	it "should output 7821830016000 when passed AAAAAABBBCCCDEEEFGHH" do
+		input = "AAAAAABBBCCCDEEEFGHH".split("")
+		expect(count_uniq_permutations(input)).to eq(7821830016000)
+	end
+
+end
+
+
+
+describe "rank" do
+	# it should work when there are no repeated letters
+	it "should return 21 when passed DBAC" do
+		input = "DBAC".split("")
+		expect(rank(input,1)).to eq(21)
+		expect(Benchmark.realtime { rank(input,1) }).to be < 0.5
+	end
+
+	# it should work when there are repeated letters
+	it "should return 2 when passed ABAB" do
+		input = "ABAB".split("")
+		expect(rank(input,1)).to eq(2)
+		expect(Benchmark.realtime { rank(input,1) }).to be < 0.5
+	end
+		
+	it "should return 1 when passed AAAB" do
+		input = "AAAB".split("")
+		expect(rank(input,1)).to eq(1)
+		expect(Benchmark.realtime { rank(input,1) }).to be < 0.5
+	end
+
+	it "should return 4 when passed BAAA" do
+		input = "BAAA".split("")
+		expect(rank(input,1)).to eq(4)
+		expect(Benchmark.realtime { rank(input,1) }).to be < 0.5
+	end
+
+
+	it "should return 24572 when passed QUESTION" do
+		input = "QUESTION".split("")
+		expect(rank(input,1)).to eq(24572)
+		expect(Benchmark.realtime { rank(input,1) }).to be < 0.5
+	end
+
+	it "should return 10743 when passed BOOKKEEPER" do
+		input = "BOOKKEEPER".split("")
+		expect(rank(input,1)).to eq(10743)
+		expect(Benchmark.realtime { rank(input,1) }).to be < 0.5
+	end
+
+	it "should return 8222334634 when passed NONINTUITIVENESS" do
+		input = "NONINTUITIVENESS".split("")
+		expect(rank(input,1)).to eq(8222334634)
+		expect(Benchmark.realtime { rank(input,1) }).to be < 0.5
+	end
+
 
 end
 

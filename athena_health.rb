@@ -103,8 +103,26 @@ require 'benchmark'
 # input_ary = input.upcase.split("")
 # rank = 1
 
+
+
+
+def count_uniq_permutations(array)
+	length = array.length
+	uniq = array & array
+	uniq.map! { |x| factorial(array.count(x)) }
+	return factorial(length)/uniq.inject(:*)
+end
+
+def factorial(input)
+	if input == 0
+		return 1
+	else
+		return input * factorial(input-1)
+	end
+end
+
 def rank(input_ary, initial_rank)
-	letter_bank = input_ary.sort
+	letter_bank = (input_ary&input_ary).sort
 	# base case: when input_ary.length == 1
 	if input_ary.length == 1
 		return initial_rank
@@ -113,28 +131,11 @@ def rank(input_ary, initial_rank)
 		while input_ary.first != letter_bank.first
 			dup_ary = input_ary.dup
 			dup_ary.delete_at( dup_ary.index(letter_bank.first) || dup_ary.length)
-			rank = rank + count_uniq_permutations(dup_ary)
+			initial_rank = initial_rank + count_uniq_permutations(dup_ary)
 			letter_bank.shift
 		end
 		input_ary.shift
 		rank(input_ary, initial_rank)
-	end
-end
-
-class Array
-	def count_uniq_permutations(array)
-		length = array.length
-		uniq = array & array
-		uniq.map! { |x| x==x ? factorial(array.count(x)) : x }
-		return factorial(length)/uniq.inject(:*)
-	end
-end
-
-def factorial(input)
-	if input == 0
-		return 1
-	else
-		return input * factorial(input-1)
 	end
 end
 
