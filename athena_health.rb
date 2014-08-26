@@ -53,24 +53,82 @@ require 'benchmark'
 # 				delete the character from the letter bank
 # 				check the next character in the input
 
-def solution(input)
+# -----------------------FIRST TRY----------------------------------------------------------------------------
+# def solution(input)
 
-	letter_bank = input.upcase.split("").sort { |x,y| x.ord <=> y.ord }
+# 	letter_bank = input.upcase.split("").sort { |x,y| x.ord <=> y.ord }
 
-	rank = 1
-	i = 0
+# 	rank = 1
+# 	i = 0
 
-	while i < input.length
-		order_in_letter_bank = letter_bank.index(input[i])
-		add_to_rank = order_in_letter_bank * factorial(letter_bank.length - 1)
-		rank = rank + add_to_rank
-		letter_bank.delete_at(order_in_letter_bank)
-		i = i + 1
+# 	while i < input.length
+# 		order_in_letter_bank = letter_bank.index(input[i])
+# 		add_to_rank = order_in_letter_bank * factorial(letter_bank.length - 1)
+# 		rank = rank + add_to_rank
+# 		letter_bank.delete_at(order_in_letter_bank)
+# 		i = i + 1
+# 	end
+
+# 	return rank
+# end
+
+# def factorial(input)
+# 	if input == 0
+# 		return 1
+# 	else
+# 		return input * factorial(input-1)
+# 	end
+# end
+
+# print solution("QUESTION")
+
+# print Benchmark.measure { solution("QUESTION") }
+
+# -------------------------------------------------------------------------------------------------------------
+
+# Number of distinct permutations obtainable from string S = NUM
+# Take each unique character in S, let C = the number of times it occurs in S, take C!
+# 	multiply all such C!'s together, take the result and divide S.length by it
+# NUM = (S.length)! / (C1! x C2! x C3! . . . x Cm!), for all m unique characters in S'
+
+# # gets array of characters in input
+# input_ary = input.upcase.split("")
+
+# # orders input letters alphabetically, without repetition
+# letter_bank = (input_ary & input_ary).sort
+
+# uniq_ary = (input_ary & input_ary).map! { |x| x==x ? [x, input_ary.count(x)] : x }
+
+
+# input_ary = input.upcase.split("")
+# rank = 1
+
+def rank(input_ary, initial_rank)
+	letter_bank = input_ary.sort
+	# base case: when input_ary.length == 1
+	if input_ary.length == 1
+		return initial_rank
+	# inductive case: when input_ary.length > 1
+	else
+		while input_ary.first != letter_bank.first
+			dup_ary = input_ary.dup
+			dup_ary.delete_at( dup_ary.index(letter_bank.first) || dup_ary.length)
+			rank = rank + count_uniq_permutations(dup_ary)
+			letter_bank.shift
+		end
+		input_ary.shift
+		rank(input_ary, initial_rank)
 	end
-
-	return rank
 end
 
+class Array
+	def count_uniq_permutations(array)
+		length = array.length
+		uniq = array & array
+		uniq.map! { |x| x==x ? factorial(array.count(x)) : x }
+		return factorial(length)/uniq.inject(:*)
+	end
+end
 
 def factorial(input)
 	if input == 0
@@ -78,49 +136,5 @@ def factorial(input)
 	else
 		return input * factorial(input-1)
 	end
-end
-
-print solution("QUESTION")
-
-print Benchmark.measure { solution("QUESTION") }
-
-Number of distinct permutations obtainable from string S = NUM
-Take each unique character in S, let C = the number of times it occurs in S, take C!
-	multiply all such C!'s together, take the result and divide S.length by it
-NUM = (S.length)! / (C1! x C2! x C3! . . . x Cm!), for all m unique characters in S'
-
-# gets array of characters in input
-input_ary = input.upcase.split("")
-
-# orders input letters alphabetically, without repetition
-letter_bank = (input_ary & input_ary).sort
-
-uniq_ary = (input_ary & input_ary).map! { |x| x==x ? [x, input_ary.count(x)] : x }
-
-
-input_ary = input.upcase.split("")
-rank = 1
-
-def rank(input_ary, initial_rank)
-	letter_bank = (input_ary & input_ary).sort
-	# base case: when input_ary.length == 1
-	if input_ary.length == 1
-		return initial_rank
-	# inductive case: when input_ary.length > 1
-	else
-		if input_array.first == letter_bank.first
-			input_ary.shift
-			rank(input_ary, initial_rank)
-		else
-			place_in_bank = letter_bank.index(input_array.first)
-
-
-	end
-
-def count_uniq_permutations(array)
-	length = array.length
-	uniq = array & array
-	uniq.map! { |x| x==x ? factorial(array.count(x)) : x }
-	return factorial(length)/uniq.inject(:*)
 end
 

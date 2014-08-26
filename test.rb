@@ -1,6 +1,6 @@
 require 'benchmark'
 
-# input = ARGV[0]
+input = ARGV[0]
 
 def solution(input)
 	# gets every permutation of the input string, stores it to an array
@@ -24,8 +24,10 @@ end
 # end
 
 # print "Number of distinct strings: #{every_combination.length}\n"
-# print "Rank of #{input.upcase}: #{solution(input)}\n"
-# print "Run time: #{Benchmark.realtime { solution(input) }}\n"
+print "Rank of #{input.upcase}: #{solution(input)}\n"
+print "Run time: #{Benchmark.realtime { solution(input) }}\n"
+pid, size = `ps ax -o pid,rss | grep -E "^[[:space:]]*#{$$}"`.strip.split.map(&:to_i)
+print "Memory used: #{size/1000000}GB\n"
 
 
 
