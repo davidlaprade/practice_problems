@@ -58,7 +58,13 @@ describe "rank" do
 		expect(rank(input,1)).to eq(2)
 		expect(Benchmark.realtime { rank(input,1) }).to be < 0.5
 	end
-		
+	
+	it "should return 1 when passed AAAAAAAAAAAAAAAAAAAAAAAAAAAA" do
+		input = "AAAAAAAAAAAAAAAAAAAAAAAAAAAA".split("")
+		expect(rank(input,1)).to eq(1)
+		expect(Benchmark.realtime { rank(input,1) }).to be < 0.5
+	end
+
 	it "should return 1 when passed AAAB" do
 		input = "AAAB".split("")
 		expect(rank(input,1)).to eq(1)
