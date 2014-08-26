@@ -96,6 +96,13 @@ describe "rank" do
 		expect(Benchmark.realtime { rank(input,1) }).to be < 0.5
 	end
 
+	# it should return the same as before when capitolization is changed
+	it "should return 8222334634 when passed NoNINTUitIVEnesS" do
+		input = "NoNINTUitIVEnesS".split("")
+		expect(rank(input,1)).to eq(8222334634)
+		expect(Benchmark.realtime { rank(input,1) }).to be < 0.5
+	end
+
 
 end
 
