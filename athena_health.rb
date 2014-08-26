@@ -95,7 +95,7 @@ input_ary = input.upcase.split("")
 # orders input letters alphabetically, without repetition
 letter_bank = (input_ary & input_ary).sort
 
-uniq_ary = (input_ary & input_ary).map! { |x| x=x ? [x, input_ary.count(x)] : x }
+uniq_ary = (input_ary & input_ary).map! { |x| x==x ? [x, input_ary.count(x)] : x }
 
 
 input_ary = input.upcase.split("")
@@ -103,10 +103,24 @@ rank = 1
 
 def rank(input_ary, initial_rank)
 	letter_bank = (input_ary & input_ary).sort
-	if input_array.first == letter_bank.first
-		input_ary.shift
-		rank(input_ary, initial_rank)
+	# base case: when input_ary.length == 1
+	if input_ary.length == 1
+		return initial_rank
+	# inductive case: when input_ary.length > 1
 	else
-		place_in_bank = letter_bank.index(input_array.first)
+		if input_array.first == letter_bank.first
+			input_ary.shift
+			rank(input_ary, initial_rank)
+		else
+			place_in_bank = letter_bank.index(input_array.first)
 
+
+	end
+
+def count_uniq_permutations(array)
+	length = array.length
+	uniq = array & array
+	uniq.map! { |x| x==x ? factorial(array.count(x)) : x }
+	return factorial(length)/uniq.inject(:*)
+end
 
