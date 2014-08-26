@@ -30,8 +30,8 @@ class Permutation
 		@order = 1
 	end
 
-	# called on Permutation object, returns alphabetical rank of Permutation.string among
-	# all other strings containing the same letters
+	# called on Permutation object, returns alphabetical rank of Permutation.string
+	# among all other strings containing the same letters
 	def rank
 		# creates bank of unique characters in self.char_array, then sorts them alphabetically
 		letter_bank = (self.char_array&self.char_array).sort
@@ -42,14 +42,13 @@ class Permutation
 
 		# inductive case: when self.char_array.length > 1
 		else
-			# when the input_array does NOT begin with the first-ranked letter in the letter_bank
-			# we know that the string self.char_array corresponds to is alphabetically behind 
-			# every unique string composed of the same letters and starting with the first-ranked letter
-			# so, add the number of those unique strings to the input_array's rank
+			# when the char_array does NOT begin with the first-ranked letter in the letter_bank
+			# we know that self.string is alphabetically behind each unique string that starts with the first-ranked letter
+			# so, add the number of said unique strings to self.order
 			while self.char_array.first != letter_bank.first
 				dup_array = self.char_array.dup
 				# find out how many unique strings begining with the first-ranked letter 
-				# can be generated from the letters in self.char_array, add this to the input_array's rank
+				# can be generated from the letters in self.char_array, add this to the char_array's rank
 				dup_array.delete_at( dup_array.index(letter_bank.first) || dup_array.length)
 				self.order = self.order + dup_array.count_uniq_permutations
 				# now repeat the process above until there are no letters in the letter_bank ranked before self.char_array.first
@@ -67,7 +66,7 @@ end
 # gets input from command line argument
 input = Permutation.new(ARGV[0])
 
-# print formatted results to standard out
+# passes formatted results to standard out
 print "Rank of #{input.string}: #{input.rank}\n"
 print "Run time: %f seconds\n" % Benchmark.realtime { input.rank }.to_f
 pid, size = `ps ax -o pid,rss | grep -E "^[[:space:]]*#{$$}"`.strip.split.map(&:to_i)
