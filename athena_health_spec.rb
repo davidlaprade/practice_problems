@@ -1,7 +1,5 @@
 $LOAD_PATH << '.'
 require 'athena_health_object_class'
-# require 'athena_health'
-# require 'test'
 
 describe "count_uniq_permutations(array)" do
 
@@ -43,8 +41,6 @@ describe "count_uniq_permutations(array)" do
 
 end
 
-
-
 describe "calculate_rank" do
 	# it should work when there are no repeated letters
 	it "should return 21 when passed DBAC" do
@@ -78,6 +74,26 @@ describe "calculate_rank" do
 		expect(Benchmark.realtime { input.calculate_rank }).to be < 0.5
 	end
 
+	# test another long-ish word against the result from the iterative method
+	it "should return 124678 when passed PORCUPINE" do
+		input = Permutation.new("PORCUPINE")
+		expect(input.calculate_rank).to eq(124678)
+		expect(Benchmark.realtime { input.calculate_rank }).to be < 0.5
+	end
+
+	# can it identify the first string out of the letters from PORCUPINE?
+	it "should return 1 when passed CEINOPPRU" do
+		input = Permutation.new("CEINOPPRU")
+		expect(input.calculate_rank).to eq(1)
+		expect(Benchmark.realtime { input.calculate_rank }).to be < 0.5
+	end
+
+	# can it identify the first string out of the letters from PORCUPINE when case is mixed?
+	it "should return 1 when passed CeinOPpRU" do
+		input = Permutation.new("CeinOPpRU")
+		expect(input.calculate_rank).to eq(1)
+		expect(Benchmark.realtime { input.calculate_rank }).to be < 0.5
+	end
 
 	it "should return 24572 when passed QUESTION" do
 		input = Permutation.new("QUESTION")
@@ -104,54 +120,19 @@ describe "calculate_rank" do
 		expect(Benchmark.realtime { input.calculate_rank }).to be < 0.5
 	end
 
+	# it should return the same as before when everything is lowercase
+	it "should return 8222334634 when passed nonintutitivenesS" do
+		input = Permutation.new("NoNINTUitIVEnesS".downcase)
+		expect(input.calculate_rank).to eq(8222334634)
+		expect(Benchmark.realtime { input.calculate_rank }).to be < 0.5
+	end
+
+	it "can identify a crazy long string that's in alphabetical order" do
+		input = Permutation.new("bbbbbbbbbbbbbbbbbbbbccccfggggghmooooopqsssstwxxxxxxxxxxxxxxxxxxxxxxxyzzzz")
+		expect(input.calculate_rank).to eq(1)
+		expect(Benchmark.realtime { input.calculate_rank }).to be < 0.5
+	end	
+
 
 end
 
-# describe Object, ".solution" do
-# 	# it should work when there are no repeated letters
-# 	it "should return 21 when passed DBAC" do
-# 		input = "DBAC"
-# 		expect(solution(input)).to eq(21)
-# 		expect(Benchmark.realtime { solution(input) }).to be < 0.5
-# 	end
-
-# 	# it should work when there are repeated letters
-# 	it "should return 2 when passed ABAB" do
-# 		input = "ABAB"
-# 		expect(solution(input)).to eq(2)
-# 		expect(Benchmark.realtime { solution(input) }).to be < 0.5
-# 	end
-		
-# 	it "should return 1 when passed AAAB" do
-# 		input = "AAAB"
-# 		expect(solution(input)).to eq(1)
-# 		expect(Benchmark.realtime { solution(input) }).to be < 0.5
-# 	end
-
-# 	it "should return 4 when passed BAAA" do
-# 		input = "BAAA"
-# 		expect(solution(input)).to eq(4)
-# 		expect(Benchmark.realtime { solution(input) }).to be < 0.5
-# 	end
-
-
-# 	it "should return 24572 when passed QUESTION" do
-# 		input = "QUESTION"
-# 		expect(solution(input)).to eq(24572)
-# 		expect(Benchmark.realtime { solution(input) }).to be < 0.5
-# 	end
-
-# 	it "should return 10743 when passed BOOKKEEPER" do
-# 		input = "BOOKKEEPER"
-# 		expect(solution(input)).to eq(10743)
-# 		expect(Benchmark.realtime { solution(input) }).to be < 0.5
-# 	end
-
-	# it "should return 8222334634 when passed NONINTUITIVENESS" do
-	# 	input = "NONINTUITIVENESS"
-	# 	expect(solution(input)).to eq(8222334634)
-	# 	Benchmark.realtime { solution(input) }.should be < 0.5
-	# end
-
-
-# end
