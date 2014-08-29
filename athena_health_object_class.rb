@@ -13,7 +13,7 @@
 
 require 'benchmark'
 
-# returns factorial of input, i.e. (input!); Ruby doesn't contain a factorial
+# returns factorial of input, i.e. (input!); Ruby doesn't contain a factorial method
 def factorial(input)
 	if input == 0
 		return 1
@@ -67,8 +67,8 @@ class Permutation
 		# inductive case: when self.char_array.length > 1
 		# now we deal with the case in which there are multiple (albeit potentially non-unique) strings that could be composed of the letters
 		else
-			# when the char_array does NOT begin with the first-ranked letter in the letter_bank
-			# we know that self.string is alphabetically behind each unique string that starts with the first-ranked letter
+			# when the char_array does NOT begin with the first-ranked letter in the letter_bank we know that
+			# self.string is alphabetically behind each unique string that starts with the first-ranked letter
 			# so, add the number of unique strings self.string is alphabetically behind to self.rank
 			while self.char_array.first != letter_bank.first
 				dup_array = self.char_array.dup
